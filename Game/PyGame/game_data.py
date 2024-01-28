@@ -11,3 +11,16 @@ level_1 = {'platforms': '../world_1_csv/world_1_Platforms(2).csv',
            'player': '../world_1_csv/world_1_Player.csv',
            'constraints': '../world_1_csv/world_1_Constraints.csv'
            }
+
+level_2 = {'platforms': '../world_2_csv/world_2_2_platforms.csv',
+           'pipes': '../world_2_csv/world_2_2_pipes.csv',
+           'monsters': '../world_2_csv/world_2_2_monsters.csv',
+           'lucky_blocks': '../world_2_csv/world_2_2_lucky_blocks.csv',
+           'funguses_red': '../world_2_csv/world_2_2_funguses_red.csv',
+           'coins': '../world_2_csv/world_2_2_coins.csv',
+           'player': '../world_2_csv/world_2_2_player.csv',
+           'constraints': '../world_2_csv/world_2_2_constraints.csv',
+           'plants': '../world_2_csv/world_2_2_plants.csv',
+           'uppers': '../world_2_csv/world_2_2_uppers.csv',
+           'finish': '../world_2_csv/world_2_2_finish.csv'
+           }

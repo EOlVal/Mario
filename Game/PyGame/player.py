@@ -1,5 +1,6 @@
 import pygame
 from support import import_folder
+import const as c
 
 
 class Player(pygame.sprite.Sprite):
@@ -9,15 +10,11 @@ class Player(pygame.sprite.Sprite):
         self.frame_ind = 0
         self.anim_speed = 0.15
         self.image = self.animations['stay'][self.frame_ind]
-        self.start_pos = pos
         self.rect = self.image.get_rect(topleft=pos)
 
         self.boost = False
         self.direction = pygame.math.Vector2(0, 0)
-        if not self.boost:
-            self.speed = 1
-        elif self.boost:
-            self.speed *= 2
+        self.speed = 1
         self.gravity = 0.2
         self.jump_speed = -5.5
 
@@ -29,11 +26,22 @@ class Player(pygame.sprite.Sprite):
         self.isdeath = False
 
     def import_mario_skins(self):
-        mario_path = '../pics/mario/'
-        self.animations = {'stay': [], 'run': [], 'jump': [], 'death': []}
+        mario_path_1 = '../pics/mario/'
+        mario_path_2 = '../pics/mario_2/'
+
+        if c.COUNT_RED_F == 0:
+            self.animations = {'stay': [], 'run': [], 'jump': [], 'death': []}
+
+        elif c.COUNT_RED_F > 0:
+            self.animations = {'stay_2': [], 'run_2': [], 'jump_2': []}
+
         for anim in self.animations.keys():
-            full_path = mario_path + anim
-            self.animations[anim] = import_folder(full_path)
+            if c.COUNT_RED_F == 0:
+                full_path = mario_path_1 + anim
+                self.animations[anim] = import_folder(full_path)
+            elif c.COUNT_RED_F:
+                full_path = mario_path_2 + anim
+                self.animations[anim] = import_folder(full_path)
 
     def animate(self):
         animation = self.animations[self.stat]
@@ -77,13 +85,20 @@ class Player(pygame.sprite.Sprite):
             self.jump()
 
     def status(self):
-        if self.direction.y < 0:
+        if self.direction.y < 0 and c.COUNT_RED_F == 0:
             self.stat = 'jump'
+        elif self.direction.y < 0 < c.COUNT_RED_F:
+            self.stat = 'jump_2'
         else:
-            if self.direction.x != 0:
+            if self.direction.x != 0 and c.COUNT_RED_F == 0:
                 self.stat = 'run'
+            elif self.direction.x != 0 and c.COUNT_RED_F:
+                self.stat = 'run_2'
             else:
-                self.stat = 'stay'
+                if c.COUNT_RED_F == 0:
+                    self.stat = 'stay'
+                elif c.COUNT_RED_F:
+                    self.stat = 'stay_2'
 
     def apply_gravity(self):
         self.direction.y += self.gravity
@@ -91,7 +106,10 @@ class Player(pygame.sprite.Sprite):
 
     def jump(self):
         self.direction.y = self.jump_speed
-        self.stat = 'jump'
+        if c.COUNT_RED_F == 0:
+            self.stat = 'jump'
+        elif c.COUNT_RED_F:
+            self.stat = 'jump_2'
 
     def update(self):
         self.keys_keyboard()

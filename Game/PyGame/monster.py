@@ -1,11 +1,16 @@
 import pygame
 from Tiles import AnimatedTile
-from support import import_folder
+import const as c
+
+if c.NUMB_LEVEL == 1:
+    path = '../pics/funguses/level_1'
+elif c.NUMB_LEVEL == 2:
+    path = '../pics/funguses/level_2'
 
 
 class Monster(AnimatedTile):
     def __init__(self, size, x, y):
-        super().__init__(size, x, y, '../pics/funguses')
+        super().__init__(size, x, y, path)
         self.speed = 1
 
     def move(self):

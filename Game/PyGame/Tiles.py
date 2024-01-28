@@ -23,6 +23,11 @@ class Fungus_red(StatictTile):
         super().__init__(size, x, y, pygame.image.load('../pics/fungus_red.png').convert_alpha())
 
 
+class Fungus_red_2(StatictTile):
+    def __init__(self, size, x, y):
+        super().__init__(size, x, y, pygame.image.load('../pics/fungus_red.jpg'))
+
+
 class Constraints(StatictTile):
     def __init__(self, size, x, y):
         super().__init__(size, x, y, pygame.image.load('../pics/constraint.jpg').convert_alpha())
@@ -36,6 +41,11 @@ class Cloud(StatictTile):
 class Tree(StatictTile):
     def __init__(self, size, x, y):
         super().__init__(size, x, y, pygame.image.load('../pics/tree_2.png'))
+
+
+class End_pipe(StatictTile):
+    def __init__(self, size, x, y):
+        super().__init__(size, x, y, pygame.image.load('../pics/piece_of_trouble_3.jpg'))
 
 
 class AnimatedTile(Tile):
