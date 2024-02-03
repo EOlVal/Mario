@@ -2,6 +2,7 @@ from csv import reader
 from settings import *
 from os import walk
 import pygame
+import const as c
 
 
 def import_csv(path):
@@ -37,3 +38,26 @@ def import_folder(path):
             image_surf = pygame.image.load(full_path).convert_alpha()
             surf_list.append(image_surf)
     return surf_list
+
+
+def draw_text(surf, text, font, color, x, y, centered=True):
+    lines = text.split('\n')
+    for i in range(len(lines)):
+        text_surface = font.render(lines[i], True, color)
+        text_rect = text_surface.get_rect()
+        if centered:
+            text_rect.midtop = (x, y + i * text_rect.height)
+        else:
+            text_rect.topleft = (x, y + i * text_rect.height)
+        surf.blit(text_surface, text_rect)
+
+
+def draw_value(surf, text, val, font, tcolor, vcolor, x, y):
+    text_surface = font.render(text + ": ", True, tcolor)
+    val_surface = font.render(str(val), True, vcolor)
+    text_rect = text_surface.get_rect()
+    val_rect = val_surface.get_rect()
+    text_rect.topright = (x, y)
+    val_rect.topleft = (x, y)
+    surf.blit(text_surface, text_rect)
+    surf.blit(val_surface, val_rect)

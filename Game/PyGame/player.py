@@ -11,6 +11,7 @@ class Player(pygame.sprite.Sprite):
         self.anim_speed = 0.15
         self.image = self.animations['stay'][self.frame_ind]
         self.rect = self.image.get_rect(topleft=pos)
+        self.start_pos = pos
 
         self.boost = False
         self.direction = pygame.math.Vector2(0, 0)
@@ -44,6 +45,7 @@ class Player(pygame.sprite.Sprite):
                 self.animations[anim] = import_folder(full_path)
 
     def animate(self):
+        self.import_mario_skins()
         animation = self.animations[self.stat]
         self.frame_ind += self.anim_speed
         if self.frame_ind >= len(animation):
@@ -78,10 +80,14 @@ class Player(pygame.sprite.Sprite):
             self.right_stat = False
             self.boost = True
 
+        elif keys[pygame.K_ESCAPE]:
+            c.ESC = True
+
         else:
             self.direction.x = 0
 
         if (keys[pygame.K_UP] or keys[pygame.K_SPACE]) and self.on_ground:
+            c.jump.play()
             self.jump()
 
     def status(self):

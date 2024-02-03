@@ -28,6 +28,11 @@ class Fungus_red_2(StatictTile):
         super().__init__(size, x, y, pygame.image.load('../pics/fungus_red.jpg'))
 
 
+class Big_castle(StatictTile):
+    def __init__(self, size, x, y):
+        super().__init__(size, x, y, pygame.image.load('../pics/big_castle.png'))
+
+
 class Constraints(StatictTile):
     def __init__(self, size, x, y):
         super().__init__(size, x, y, pygame.image.load('../pics/constraint.jpg').convert_alpha())
