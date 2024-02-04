@@ -61,3 +61,26 @@ def draw_value(surf, text, val, font, tcolor, vcolor, x, y):
     val_rect.topleft = (x, y)
     surf.blit(text_surface, text_rect)
     surf.blit(val_surface, val_rect)
+
+
+def top_score():
+    x = [100, 150, 300, 350, 500]
+    color = [c.BLUE, c.MAGENTA, c.GREEN, c.BLUE, c.MAGENTA]
+    header = ["#", "Счет", "Уров", "   Дата", "Имя"]
+    g.screen.fill(g.YELLOW)
+    draw_text(g.screen, "Таблица рекордов", g.font_mid, g.BLUE, 150, 10, False)
+    res = g.cur.execute("SELECT * FROM scores ORDER BY score DESC LIMIT 20").fetchall()
+    for j in range(1, 5):
+        draw_text(g.screen, header[j], g.font_small, g.BLACK, x[j], 60, False)
+    for i in range(len(res)):
+        for j in range(1, 5):
+            draw_text(g.screen, str(res[i][j]), g.font_small, color[j], x[j], i * 20 + 85, False)
+    pygame.display.flip()
+    run = True
+    while run:
+        g.clock.tick(g.FPS)
+        for ev in pygame.event.get():
+            if ev.type == pygame.QUIT:
+                goodbye()
+            if ev.type in [pygame.KEYDOWN, pygame.MOUSEBUTTONDOWN]:
+                run = False

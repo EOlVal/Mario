@@ -148,7 +148,7 @@ class Level_3:
                     player.rect.bottom = sprite.rect.top
                     player.direction.y = 0
                     player.on_ground = True
-                elif player.direction.y < 0:
+                elif player.direction.y < 0 and not player.on_ground:
                     player.rect.top = sprite.rect.bottom
                     player.direction.y = 0
 
@@ -166,11 +166,11 @@ class Level_3:
                     player.on_ground = True
             elif fung.rect.colliderect(player.rect) and player.on_ground:
                 c.LIVES -= 1
+                c.COUNT_RED_F = 0
                 player.rect.x = player.start_pos[0] + 180
             elif not player.on_ground and player.rect.y > 1000:
+                c.COUNT_RED_F = 0
                 c.LIVES = 0
-                player.rect.x = player.start_pos[0] + 180
-                player.rect.y = player.start_pos[1] - 180
 
     def get_fungus_red(self):
         player = self.player.sprite
@@ -228,6 +228,7 @@ class Level_3:
         for castle in self.finish_sprites:
             if (castle.rect.colliderect(player.rect) and not player.on_ground) or (
                     castle.rect.colliderect(player.rect) and player.on_ground):
+                c.COUNT_RED_F = 0
                 c.WIN = True
 
     def run(self):

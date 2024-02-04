@@ -53,5 +53,7 @@ pause.set_volume(80)
 fung = pygame.mixer.Sound('../soundtrack/fung.mp3')
 fung.set_volume(70)
 
-con = sqlite3.connect("data/gamedata.db")
+con = sqlite3.connect("../sql/results.db")
 cur = con.cursor()
+
+path = '../pics/funguses/level_1'

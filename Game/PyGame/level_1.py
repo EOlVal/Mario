@@ -176,8 +176,6 @@ class Level_1:
             elif not player.on_ground and player.rect.y > 190:
                 c.COUNT_RED_F = 0
                 c.LIVES = 0
-                player.rect.x = player.start_pos[0] + 180
-                player.rect.y = player.start_pos[1] - 180
 
     def get_coins(self):
         player = self.player.sprite
@@ -229,6 +227,7 @@ class Level_1:
             if (castle.rect.colliderect(player.rect) and not player.on_ground) or (
                     castle.rect.colliderect(player.rect) and player.on_ground):
                 c.NUMB_LEVEL += 1
+                c.COUNT_RED_F = 0
 
     def collision_reverse_monsters(self):
         for monster in self.monsters_sprites.sprites():

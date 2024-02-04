@@ -6,12 +6,16 @@ import const as c
 class Player(pygame.sprite.Sprite):
     def __init__(self, pos, surfase):
         super().__init__()
-        self.import_mario_skins()
+        self.start_pos = pos
         self.frame_ind = 0
         self.anim_speed = 0.15
-        self.image = self.animations['stay'][self.frame_ind]
-        self.rect = self.image.get_rect(topleft=pos)
-        self.start_pos = pos
+        self.animations = {'stay': [], 'run': [], 'jump': [], 'death': []}
+        self.rect = (*self.start_pos, 10, 10)
+        self.import_mario_skins()
+        colorkey = self.image.get_at((0, 0))
+        self.image.set_colorkey(colorkey)
+        # self.image = self.animations['stay'][self.frame_ind]
+        # self.rect = self.image.get_rect(topleft=self.start_pos)
 
         self.boost = False
         self.direction = pygame.math.Vector2(0, 0)
@@ -43,6 +47,15 @@ class Player(pygame.sprite.Sprite):
             elif c.COUNT_RED_F:
                 full_path = mario_path_2 + anim
                 self.animations[anim] = import_folder(full_path)
+        if self.frame_ind >= len(self.animations):
+            self.frame_ind = 0
+        xy = (self.rect[0], self.rect[1])
+        if 'stay' in self.animations:
+            self.image = self.animations['stay'][0]
+        if 'stay_2' in self.animations:
+            self.image = self.animations['stay_2'][0]
+        self.rect = self.image.get_rect()
+        self.rect.topleft = xy
 
     def animate(self):
         self.import_mario_skins()

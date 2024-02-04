@@ -6,8 +6,12 @@ from level_2 import Level_2
 from level_3 import Level_3
 from game_data import level_1, level_2, level_3
 import const as c
+import datetime as dt
 
 pygame.init()
+pygame.display.set_caption('Mario')
+pygame_icon = pygame.image.load('../icon/icon.png')
+pygame.display.set_icon(pygame_icon)
 size = screen_width, screen_height
 screen = pygame.display.set_mode(size)
 clock = pygame.time.Clock()
@@ -46,6 +50,8 @@ def win():
         draw_text(screen, "ВЫ ВЫИГРАЛИ", c.font_mid, c.GREEN, screen_width // 2, 40)
         draw_text(screen, "СПАСИБО, ЧТО ИГРАЛИ В МОЮ ИГРУ", c.font_mid, c.GREEN, screen_width // 2, 80)
         pygame.display.flip()
+        c.cur.execute("""INSERT INTO result(currencies,result_count,date_time) VALUES(?,?,?)""", ())
+        c.con.commit()
 
 
 def pause():
@@ -62,6 +68,34 @@ def pause():
                     run = False
                     c.ESC = False
                     pygame.mixer.music.unpause()
+                elif ev.key == pygame.K_1:
+                    top_score()
+
+
+def top_score():
+    x = [100, 150, 300, 350]
+    color = [c.BLUE, c.MAGENTA, c.GREEN, c.BLUE, c.MAGENTA]
+    header = ["#", "Счет", "Уровни", "Дата"]
+    screen.fill(c.BLACK)
+    draw_text(screen, "Таблица рекордов", c.font_mid, c.BLUE, 150, 10, False)
+    res = c.cur.execute("SELECT * FROM all").fetchall()
+    c.cur.execute("""INSERT INTO result(score,level,date) VALUES(?,?,?)""",
+                  (c.COUNT, c.NUMB_LEVEL, str(dt.datetime.now())))
+    c.con.commit()
+    for j in range(1, 4):
+        draw_text(screen, header[j], c.font_mid, (0, 0, 0), x[j], 60, False)
+    for i in range(len(res)):
+        for j in range(1, 4):
+            draw_text(screen, str(res[i][j]), c.font_mid, color[j], x[j], i * 20 + 85, False)
+    pygame.display.flip()
+    run = True
+    while run:
+        for ev in pygame.event.get():
+            if ev.type == pygame.QUIT:
+                pygame.quit()
+                exit()
+            if ev.type in [pygame.KEYDOWN, pygame.MOUSEBUTTONDOWN]:
+                run = False
 
 
 def intro():
@@ -142,3 +176,4 @@ while running:
     clock.tick(c.FPS)
 pygame.quit()
 print(c.COUNT)
+print(c.LIVES)

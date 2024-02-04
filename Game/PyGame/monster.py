@@ -12,6 +12,8 @@ class Monster(AnimatedTile):
     def __init__(self, size, x, y):
         super().__init__(size, x, y, path)
         self.speed = 1
+        colorkey = self.image.get_at((0, 0))
+        self.image.set_colorkey(colorkey)
 
     def move(self):
         self.rect.x += self.speed

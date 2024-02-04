@@ -161,11 +161,11 @@ class Level_2:
                     player.on_ground = True
             elif fung.rect.colliderect(player.rect) and player.on_ground:
                 c.LIVES -= 1
+                c.COUNT_RED_F = 0
                 player.rect.x = player.start_pos[0] + 180
             elif not player.on_ground and player.rect.y > 190:
+                c.COUNT_RED_F = 0
                 c.LIVES = 0
-                player.rect.x = player.start_pos[0] + 180
-                player.rect.y = player.start_pos[1] - 180
 
     def get_coins(self):
         player = self.player.sprite
@@ -188,11 +188,13 @@ class Level_2:
                     (fung.rect.colliderect(player.rect) and player.on_ground):
                 if player.direction.y > 0:
                     c.red_fung.play()
+                    c.COUNT_RED_F = 1
                     c.COUNT += 500
                     fung.kill()
                     player.on_ground = True
                 elif player.direction.y < 0:
                     c.red_fung.play()
+                    c.COUNT_RED_F = 1
                     c.COUNT += 500
                     fung.kill()
 
@@ -224,6 +226,7 @@ class Level_2:
             if (castle.rect.colliderect(player.rect) and not player.on_ground) or (
                     castle.rect.colliderect(player.rect) and player.on_ground):
                 c.NUMB_LEVEL += 1
+                c.COUNT_RED_F = 0
 
     def run(self):
         self.platform_sprites.update(c.WORLD_SHIFT)
