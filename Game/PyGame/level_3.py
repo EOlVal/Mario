@@ -161,6 +161,7 @@ class Level_3:
             if fung.rect.colliderect(player.rect) and not player.on_ground:
                 if player.direction.y > 0:
                     c.fung.play()
+                    c.COUNT += 100
                     fung.kill()
                     player.direction.y = 0
                     player.on_ground = True
@@ -180,11 +181,13 @@ class Level_3:
                 if player.direction.y > 0:
                     c.red_fung.play()
                     c.COUNT_RED_F = 1
+                    c.COUNT += 500
                     fung.kill()
                     player.on_ground = True
                 elif player.direction.y < 0:
                     c.red_fung.play()
                     c.COUNT_RED_F = 1
+                    c.COUNT += 500
                     fung.kill()
 
     def get_coins(self):
@@ -193,12 +196,12 @@ class Level_3:
             if coin.rect.colliderect(player.rect) and not player.on_ground:
                 if player.direction.y > 0:
                     c.coin.play()
-                    c.COUNT_COINS += 1
+                    c.COUNT += 100
                     coin.kill()
                     player.on_ground = True
                 elif player.direction.y < 0:
                     c.coin.play()
-                    c.COUNT_COINS += 1
+                    c.COUNT += 100
                     coin.kill()
 
     def get_lucky_blocks(self):

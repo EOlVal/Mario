@@ -37,7 +37,8 @@ def lose():
                 pygame.quit()
                 exit()
         draw_text(screen, "ВЫ ПРОИГРАЛИ", c.font_mid, (255, 0, 0), screen_width // 2, 40)
-        draw_text(screen, "ЧТОБЫ ВЫЙТИ НАЖМИТЕ ЛЮБУЮ КЛАВИШУ", c.font_mid, (110, 20, 219), screen_width // 2, 80)
+        draw_text(screen, f"РЕЗУЛЬТАТ: {c.COUNT} ОЧКОВ", c.font_mid, (255, 255, 255), screen_width // 2, 80)
+        draw_text(screen, "ЧТОБЫ ВЫЙТИ НАЖМИТЕ ЛЮБУЮ КЛАВИШУ", c.font_mid, (110, 20, 219), screen_width // 2, 160)
         pygame.display.flip()
 
 
@@ -48,10 +49,8 @@ def win():
                 pygame.quit()
                 exit()
         draw_text(screen, "ВЫ ВЫИГРАЛИ", c.font_mid, c.GREEN, screen_width // 2, 40)
-        draw_text(screen, "СПАСИБО, ЧТО ИГРАЛИ В МОЮ ИГРУ", c.font_mid, c.GREEN, screen_width // 2, 80)
+        draw_text(screen, f'РЕЗУЛЬТАТ: {c.COUNT} ОЧКОВ', c.font_mid, (255, 255, 255), screen_width // 2, 80)
         pygame.display.flip()
-        c.cur.execute("""INSERT INTO result(currencies,result_count,date_time) VALUES(?,?,?)""", ())
-        c.con.commit()
 
 
 def pause():
@@ -157,21 +156,24 @@ while running:
             screen.fill('grey')
             pause()
 
+    # if c.NUMB_LEVEL == 1:
+    #     c.vertical_tile_number = 12
+    #     screen.fill('#6495ED')
+    #     level_1.run()
+
+    # if c.NUMB_LEVEL == 1:
+    #     c.vertical_tile_number = 12
+    #     screen.fill('black')
+    #     level_2.run()
+
     if c.NUMB_LEVEL == 1:
-        c.vertical_tile_number = 12
-        screen.fill('#6495ED')
-        level_1.run()
-
-    elif c.NUMB_LEVEL == 2:
-        c.vertical_tile_number = 12
-        screen.fill('black')
-        level_2.run()
-
-    elif c.NUMB_LEVEL == 3:
         c.vertical_tile_number = 17
         screen.fill('#6495ED')
         level_3.run()
 
+    text = c.font_mid.render(f'Очков: {c.COUNT}', True, c.WHITE)
+    rect = text.get_rect()
+    screen.blit(text, (100, 10), rect)
     pygame.display.update()
     clock.tick(c.FPS)
 pygame.quit()
