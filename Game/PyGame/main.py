@@ -71,32 +71,6 @@ def pause():
                     top_score()
 
 
-def top_score():
-    x = [100, 150, 300, 350]
-    color = [c.BLUE, c.MAGENTA, c.GREEN, c.BLUE, c.MAGENTA]
-    header = ["#", "Счет", "Уровни", "Дата"]
-    screen.fill(c.BLACK)
-    draw_text(screen, "Таблица рекордов", c.font_mid, c.BLUE, 150, 10, False)
-    res = c.cur.execute("SELECT * FROM all").fetchall()
-    c.cur.execute("""INSERT INTO result(score,level,date) VALUES(?,?,?)""",
-                  (c.COUNT, c.NUMB_LEVEL, str(dt.datetime.now())))
-    c.con.commit()
-    for j in range(1, 4):
-        draw_text(screen, header[j], c.font_mid, (0, 0, 0), x[j], 60, False)
-    for i in range(len(res)):
-        for j in range(1, 4):
-            draw_text(screen, str(res[i][j]), c.font_mid, color[j], x[j], i * 20 + 85, False)
-    pygame.display.flip()
-    run = True
-    while run:
-        for ev in pygame.event.get():
-            if ev.type == pygame.QUIT:
-                pygame.quit()
-                exit()
-            if ev.type in [pygame.KEYDOWN, pygame.MOUSEBUTTONDOWN]:
-                run = False
-
-
 def intro():
     run = True
     while run:
@@ -117,7 +91,7 @@ def intro():
 
 intro()
 if c.NUMB_LEVEL == 1:
-    pygame.mixer.music.load('../soundtrack/super-mario-saundtrek.mp3')
+    pygame.mixer.music.load('../soundtrack/underground.mp3')
 
 elif c.NUMB_LEVEL == 2:
     pygame.mixer.music.load('../soundtrack/super-mario-saundtrek.mp3')
@@ -156,17 +130,17 @@ while running:
             screen.fill('grey')
             pause()
 
-    # if c.NUMB_LEVEL == 1:
-    #     c.vertical_tile_number = 12
-    #     screen.fill('#6495ED')
-    #     level_1.run()
-
-    # if c.NUMB_LEVEL == 1:
-    #     c.vertical_tile_number = 12
-    #     screen.fill('black')
-    #     level_2.run()
-
     if c.NUMB_LEVEL == 1:
+        c.vertical_tile_number = 12
+        screen.fill('#6495ED')
+        level_1.run()
+
+    elif c.NUMB_LEVEL == 2:
+        c.vertical_tile_number = 12
+        screen.fill('black')
+        level_2.run()
+
+    elif c.NUMB_LEVEL == 3:
         c.vertical_tile_number = 17
         screen.fill('#6495ED')
         level_3.run()
@@ -177,5 +151,3 @@ while running:
     pygame.display.update()
     clock.tick(c.FPS)
 pygame.quit()
-print(c.COUNT)
-print(c.LIVES)
